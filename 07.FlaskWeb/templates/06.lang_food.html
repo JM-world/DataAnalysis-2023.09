@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>언어와 음식</title>
+</head>
+<body style="margin: 40px;">
+    <h3>언어와 음식 <button onclick="location.href='/calc'">셀렉트(calc 사례)</button></h3>
+    <hr>
+    <form action="/lang" method="post">
+        번역할 언어(radio button)<br>
+        <!-- <input type="radio" name="language" value="en" checked> 영어
+        <input type="radio" name="language" value="jp"> 일본어
+        <input type="radio" name="language" value="cn"> 중국어 <br><br> -->
+        {% for k,v in l_dict.items() %}
+            <input type="radio" name="language" value="{{k}}"
+                {% if loop.first %} checked {% endif %}> {{v}}   
+        {% endfor %}<br><br>
+        좋아하는 음식(check box)<br>
+        <!-- <input type="checkbox" name="food" value="0" checked> 삼겹살
+        <input type="checkbox" name="food" value="1"> 갈비탕
+        <input type="checkbox" name="food" value="2"> 불고기
+        <input type="checkbox" name="food" value="3"> 피자
+        <input type="checkbox" name="food" value="4"> 햄버거 <br><br> -->
+        {% for f in f_list %}
+            <input type="checkbox" name="food" value="{{loop.index0}}"> {{f}}   
+        {% endfor %}<br><br>
+        <input type="submit" value="제출">
+    </form>
+    
+</body>
+</html>
