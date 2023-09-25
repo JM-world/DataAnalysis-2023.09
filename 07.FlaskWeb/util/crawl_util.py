@@ -1,6 +1,11 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import quote
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
 
 def get_bestseller():
     base_url = 'http://book.interpark.com'
@@ -71,4 +76,40 @@ def get_restaurant_list(keyword):
         tel = info[1].select_one('div').get_text().strip()
         data.append({'가게명':name, '평점':score, '메뉴':menu, '주소':addr, '전화번호':tel})
     
+    return data
+
+def get_fashion_list():
+    options = Options()
+    options.add_experimental_option("detach", True) # 브라우저 꺼짐 방지 옵션
+
+    browser = webdriver.Chrome(options=options)
+    browser.maximize_window()   # 창 최대화
+    browser.get('https://www.musinsa.com/ranking/best')
+    
+
+    body = browser.find_element(By.TAG_NAME, 'body')
+    for _ in range(20):
+        body.send_keys(Keys.PAGE_DOWN)
+        time.sleep(1)
+    #url = 'https://www.musinsa.com/ranking/best'
+    #res = requests.get(url)
+    soup = BeautifulSoup(browser.page_source, 'html.parser')
+    trs = soup.find("ul", class_="snap-article-list boxed-article-list article-list center list goods_small_media8")
+    tr = trs.find_all("li", recursive=False)
+    
+    data = []
+    for t in tr:
+        rank = t.find('p', class_="n-label label-default txt_num_rank").get_text().strip()[:3].strip()
+        rank_update = t.select_one("p > span").get_text().strip()
+        if len(rank_update) != 1:
+            rank_update = '[ ' + rank_update[:1] + rank_update[-4:].strip() + ' ]'
+        else:
+            rank_update = '[ ' + rank_update + ' ]'
+        brand = t.select_one(".item_title > a").get_text().strip()
+        name = t.select_one(".list_info > a").get_text().strip()
+        price = t.select_one(".price").get_text().strip()[-10:].strip()
+        like = t.select_one(".txt_cnt_like > span").get_text().strip()
+        img = t.select_one("div.li_inner > div.list_img > a > img")['src']
+        data.append({'순위': rank + ' ' + rank_update, '사진': img, '브랜드': brand, '제품명': name,    \
+                        '가격': price, '좋아요 수': like })
     return data

@@ -10,6 +10,7 @@ def index():
         <button onclick="location.href='/interpark'">인터파크 베스트셀러</button>
         <button onclick="location.href='/melon'">멜론 실시간 차트 Top50</button>
         <button onclick="location.href='/siksin'">영등포역 맛집</button>
+        <button onclick="location.href='/musinsa'">무신사 랭킹</button>
     '''
 
 @app.route('/interpark')
@@ -25,9 +26,12 @@ def melon():
 @app.route('/siksin')
 def siksin():
     rest_list = cu.get_restaurant_list('영등포역')
-    
     return render_template('07.siksin.html', rest_list = rest_list)
             
+@app.route('/musinsa')
+def musinsa():
+    fas_list = cu.get_fashion_list()
+    return render_template('07.musinsa.html', fas_list = fas_list)
 
 if __name__ == '__main__':
     app.run(debug=True)
