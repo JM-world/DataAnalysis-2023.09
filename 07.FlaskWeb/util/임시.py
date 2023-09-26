@@ -20,9 +20,10 @@ def get_fashion_list():
         rank_update = '[ ' + rank_update + ' ]'
     brand = tr[0].select_one(".item_title > a").get_text().strip()
     name = tr[0].select_one(".list_info > a").get_text().strip()
+    href = tr[0].select_one(".list_info > a")['href']
     price = tr[1].select_one(".price").get_text().strip()[-10:].strip()
     like = tr[0].select_one(".txt_cnt_like > span").get_text().strip()
     img = tr[0].select_one("div.li_inner > div.list_img > a > img")['src']
-    return price
+    return href
 
 print(get_fashion_list())

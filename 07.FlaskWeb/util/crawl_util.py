@@ -88,7 +88,7 @@ def get_fashion_list():
     
 
     body = browser.find_element(By.TAG_NAME, 'body')
-    for _ in range(20):
+    for _ in range(10):
         body.send_keys(Keys.PAGE_DOWN)
         time.sleep(1)
     #url = 'https://www.musinsa.com/ranking/best'
@@ -107,9 +107,10 @@ def get_fashion_list():
             rank_update = '[ ' + rank_update + ' ]'
         brand = t.select_one(".item_title > a").get_text().strip()
         name = t.select_one(".list_info > a").get_text().strip()
+        href = t.select_one(".list_info > a")['href']
         price = t.select_one(".price").get_text().strip()[-10:].strip()
         like = t.select_one(".txt_cnt_like > span").get_text().strip()
         img = t.select_one("div.li_inner > div.list_img > a > img")['src']
         data.append({'순위': rank + ' ' + rank_update, '사진': img, '브랜드': brand, '제품명': name,    \
-                        '가격': price, '좋아요 수': like })
+                        '가격': price, '좋아요 수': like, '링크': href })
     return data
