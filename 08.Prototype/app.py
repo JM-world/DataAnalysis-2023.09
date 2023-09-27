@@ -3,6 +3,8 @@ from bp.crawling import crawl_bp
 from bp.map import map_bp
 from bp.user import user_bp
 import os, random
+import util.map_util as mu
+import util.weather_util as wu
 
 app = Flask(__name__)
 app.secret_key = 'qwert12345'       # flash와 session을 사용하려면 반드시 설정해야 함
@@ -15,15 +17,39 @@ app.register_blueprint(user_bp, url_prefix='/user')
 
 @app.before_first_request
 def before_first_request():     # 최초 1회 실행
-    global quotes, quote
-    global addr
+    global quotes, addr
     filename = os.path.join(app.static_folder, 'data/todayQuote.txt')
     with open(filename, encoding='utf-8') as file:
         quotes = file.readlines()
-    quote = random.sample(quotes, 1)[0]
-    session['quote'] = quote
+    session['quote'] = random.sample(quotes, 1)[0]
     addr = '서울시 영등포구'
     session['addr'] = addr
+
+# for AJAX ###############################################
+
+@app.route('/change_quote')
+def change_quote():
+    quote = random.sample(quotes, 1)[0]
+    session['quote'] = quote
+    return quote
+
+@app.route('/change_addr')
+def change_addr():
+    addr = request.args.get('addr')
+    session['addr'] = addr
+    return addr
+
+@app.route('/weather')
+def weather():
+    addr = request.args.get('addr')
+    # 서울시 영등포구 + '청' -> 도로명 주소 -> 카카오 로컬 -> 좌표 획득
+    lat, lng = mu.get_coord(app.static_folder, addr + '청')
+    html = wu.get_weather(app.static_folder, lat, lng)
+    return html
+
+##########################################################
+
+
 
 @app.route('/')
 def home():
