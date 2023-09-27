@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block subtitle %}지하철 역{% endblock %}
+{% block content %}
+    <form action="/map/station" method="post">
+        <input type="text" name="station">
+
+        <button class="btn btn-primary" type="submit">  제출</button>
+    </form>
+{% endblock %}
