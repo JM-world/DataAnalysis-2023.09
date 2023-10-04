@@ -16,6 +16,6 @@ def login():
 def logout():
     session.pop('uid', None)
     session.pop('uname', None)
-    # session.pop('quote', None)    # login 기능을 제대로 구현한 후 처리
-    # session.pop('addr', None)
+    #session.pop('quote', None)     # login 기능을 제대로 구현한 후 처리
+    #session.pop('addr', None)
     return redirect('/')

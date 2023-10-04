@@ -29,7 +29,7 @@
                 </li>
                 <li class="nav-item dropdown ms-3">
                     <a class="nav-link dropdown-toggle {% if menu.cr %}active{% endif %}" href="#" data-bs-toggle="dropdown">
-                        <i class="fa-solid fa-brain"></i> 크롤링
+                        <i class="fa-solid fa-spider"></i> 크롤링
                     </a>
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item" href="/crawling/interpark">인터파크</a></li>
@@ -37,20 +37,17 @@
                         <li><a class="dropdown-item" href="/crawling/siksin">식신</a></li>
                     </ul>
                 </li>
-                <li class="nav-item ms-3">
-                    <a class="nav-link {% if menu.us %}active{% endif %}" href="/user"><i class="fas fa-user-friends"></i> 사용자</a>
-                </li>
                 <li class="nav-item dropdown ms-3">
                     <a class="nav-link dropdown-toggle {% if menu.ma %}active{% endif %}" href="#" data-bs-toggle="dropdown">
-                        <i class="fa-solid fa-brain"></i> 지도
+                        <i class="fa-solid fa-map-location-dot"></i> 지도
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/map/station">지하철 역</a></li>
+                        <li><a class="dropdown-item" href="/map/station">지하철역</a></li>
                         <li><a class="dropdown-item" href="/map/cctv_pop">CCTV/인구</a></li>
                     </ul>
                 </li>
                 <li class="nav-item ms-3">
-                    <a class="nav-link {% if menu.sc %}active{% endif %}" href="{% if menu.sc %}#{% else %}/schedule{% endif %}"><i class="fa-solid fa-calendar-days"></i> 스케쥴</a>
+                    <a class="nav-link {% if menu.sc %}active{% endif %}" href="{% if menu.sc %}#{% else %}/schedule/calendar/this{% endif %}"><i class="fa-solid fa-calendar-days"></i> 스케쥴</a>
                 </li>
                 <li class="nav-item ms-3">
                     {% if session['uid'] %}
@@ -61,7 +58,7 @@
                 </li>
             </ul>
             <span class="navbar-text me-3">
-                {% if session['uname'] %}
+                {% if session['uid'] %}
                     {{ session['uname'] }}님 환영합니다.
                 {% endif %}
             </span>
@@ -87,11 +84,11 @@
                     <a href="javascript:changeQuote()"><span class="badge bg-secondary">수정</span></a>
                 </div>
                 <div class="mt-5">
-                    <i class="fa fa-envelope me-2"></i>unhoiylaw@naver.com<br>
-                    <img src="{{url_for('static', filename='data/github.png')}}" height="16" class="me-2"><a href="#">Moon</a><br>
-                    <img src="{{url_for('static', filename='data/facebook.png')}}" height="16" class="me-2"><a href="#">MoonFB</a><br>
+                    <i class="fa fa-envelope me-2"></i>ckiekim@naver.com<br>
+                    <img src="{{url_for('static', filename='data/github.png')}}" height="16" class="me-2"><a href="#">ckiekim</a><br>
+                    <img src="{{url_for('static', filename='data/facebook.png')}}" height="16" class="me-2"><a href="#">ckiekimFB</a><br>
                     <a href="#" onclick="changeAddr(); return false;">
-                        <img src="{{url_for('static', filename='data/addr.png')}}" height="16" class="me-2">
+                        <img src="{{url_for('static', filename='data/addr.png')}}" height="16">
                     </a>
                         <span id="addr">{{ session['addr'] }}</span>
                         <a href="javascript:changeWeather()"><span class="badge bg-secondary">날씨</span></a>

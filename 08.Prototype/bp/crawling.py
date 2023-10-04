@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, current_app, flash
+from flask import Blueprint, render_template, current_app
 import util.crawl_util as cu
 
 crawl_bp = Blueprint('crawl_bp', __name__)

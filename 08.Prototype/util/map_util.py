@@ -6,7 +6,7 @@ from urllib.parse import quote
 def get_station_map(root_path, stations):
     # 도로명 주소 구하기
     # filename = '../04.지도시각화/keys/도로명주소apiKey.txt'
-    filename = os.path.join(root_path, 'static/keys/도로명주소API.txt')
+    filename = os.path.join(root_path, 'static/keys/도로명주소apiKey.txt')
     with open(filename) as file:
         road_key = file.read()
 
@@ -104,7 +104,7 @@ def get_cctv_pop(static_path, column, colormap):
     map.save(f'{static_path}/img/cctv_pop.html')
 
 def get_coord(static_path, place):
-    filename = os.path.join(static_path, 'keys/도로명주소API.txt')
+    filename = os.path.join(static_path, 'keys/도로명주소apiKey.txt')
     with open(filename) as file:
         road_key = file.read()
     base_url = 'https://www.juso.go.kr/addrlink/addrLinkApi.do'
@@ -114,13 +114,13 @@ def get_coord(static_path, place):
     result = requests.get(url).json()
     road_addr = result['results']['juso'][0]['roadAddr']
 
-    filename = os.path.join(static_path, 'keys/카카오apikey.txt')
+    filename = os.path.join(static_path, 'keys/카카오apiKey.txt')
     with open(filename) as file:
         kakao_key = file.read()
     base_url = 'https://dapi.kakao.com/v2/local/search/address.json'
     header = {'Authorization': f'KakaoAK {kakao_key}'}
     url = f'{base_url}?query={quote(road_addr)}'
     result = requests.get(url, headers=header).json()
-    lat = (float(result['documents'][0]['y']))
-    lng = (float(result['documents'][0]['x']))
+    lat = float(result['documents'][0]['y'])
+    lng = float(result['documents'][0]['x'])
     return lat, lng

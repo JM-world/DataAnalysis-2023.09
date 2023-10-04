@@ -3,17 +3,17 @@
 {% block content %}
     <form action="/map/cctv_pop" method="post">
         <table class="table table-borderless">
-            <tr>                                                <!--col-form-label은 input칸과 줄맞춤용-->
-                <td style="width: 10%; text-align: center;"><label class="col-form-label">항목: </label></td>
-                <td style="width: 30%">
+            <tr>
+                <td style="width: 10%; text-align: center;"><label class="col-form-label">항목:</label></td>
+                <td style="width: 30%;">
                     <select class="form-control" name="column">
                         {% for column in columns %}
                             <option value="{{column}}">{{column}}</option>
                         {% endfor %}
                     </select>
                 </td>
-                <td style="width: 10%; text-align: center;"><label class="col-form-label">컬러맵: </label></td>
-                <td style="width: 30%">
+                <td style="width: 10%; text-align: center;"><label class="col-form-label">컬러맵:</label></td>
+                <td style="width: 30%;">
                     <select class="form-control" name="colormap">
                         {% for colormap in colormaps %}
                             <option value="{{colormap}}">{{colormap}}</option>
