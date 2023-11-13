@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>영등포역 맛집</title>
+    <title>맛집</title>
     <style>
-        td, th { padding: 2px; text-align: center;}
+        td, th { padding: 2px; text-align: center; }
     </style>
 </head>
-<body style="margin: 40;">
-    <h3>영등포역 맛집 <button onclick="location.href='/'">메인으로</button></h3>
+<body style="margin: 40px;">
+    <h3>{{place}} 맛집</h3>
     <hr>
     <table border="1">
         <tr>
-            <th>가게명</th>
+            <th>업소명</th>
             <th>평점</th>
             <th>메뉴</th>
             <th>주소</th>
             <th>전화번호</th>
         </tr>
-        <!-- {'가게명':name, '평점':score, '메뉴':menu, '주소':addr, '전화번호':tel} -->
         {% for rest in rest_list %}
             <tr>
-                <td>{{rest.가게명}}</td>
+                <td>{{rest.업소명}}</td>
                 <td>{{rest.평점}}</td>
                 <td>{{rest.메뉴}}</td>
                 <td>{{rest.주소}}</td>

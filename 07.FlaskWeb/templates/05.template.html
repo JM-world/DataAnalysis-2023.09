@@ -13,13 +13,13 @@
     {% else %}
         <h1>Hello World!!!</h1>
     {% endif %}
-    <br><br>
+    <br>
     <ul>
-    {% for key, value in dt.items() %}
+    {% for key, value in dt.items() %}  
         <li>{{key}} : {{value}}</li>
-    {% endfor %}
+    {% endfor %} 
     </ul>
-    <h3>Flask에서는 dt['key1']대신에 dt.key1과 같이 사용할 수 있음</h3>
+    <h3>Flask에서는 dt['key1'] 대신에 dt.key1 과 같이 사용할 수 있음</h3>
     <h3>dt['key1'] = {{dt['key1']}}</h3>
     <h3>dt.key1 = {{dt.key1}}</h3>
     {% for i in range(3) %}
