@@ -6,7 +6,7 @@
     <title>계산기</title>
 </head>
 <body style="margin: 40px;">
-    <h2>계산기 <button onclick="location.href='/lang'">라디오 및 체크박스(leng, food 사례)</button></h2>
+    <h2>계산기 <button onclick="location.href='/lang'">라디오 및 체크박스(lang, food 사례)</button></h2>
     
     <hr>
     <form action="/calc" method="post">
@@ -19,15 +19,13 @@
             <option value="//">//</option>
             <option value="%">%</option> -->
             {% for op in op_list %}
-            <!-- loop.index는 1부터 시작 -->
                 <option value="{{op}}"
-                    {% if loop.index == 3 %} selected {% endif %}   
+                    {% if loop.index == 3 %} selected {% endif %}       
                 >{{op}}</option>
             {% endfor %}
         </select>
         <input type="text" name="num2">
         <input type="submit" value="=">
     </form>
-    
 </body>
 </html>

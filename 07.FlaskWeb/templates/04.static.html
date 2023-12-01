@@ -9,10 +9,9 @@
 <body style="margin: 40px;">
     <h2>Static Resource</h2>
     <hr>
-    <img src="{{url_for('static', filename='img/고양이1.jpg', q=mtime)}}" height="400">
-    <h4>{{mtime}}</h4>
-    <h4>{{url_for('static', filename='img/고양이.jpg', q=mtime)}}</h4>
+    <img src="{{url_for('static', filename='img/cat.jpg', q=mtime)}}" height="400">
+    <h4>{{url_for('static', filename='img/cat.jpg', q=mtime)}}</h4>
     <hr>
-    <button onclick="sayHello()">Say hello</button>
+    <button onclick="sayHello()">Say Hello</button>
 </body>
 </html>

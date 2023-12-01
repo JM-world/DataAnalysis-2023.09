@@ -1,32 +1,7 @@
 // AJAX(Asynchronous Javascript and XML)
 // Web page의 일부분만 변경하는 방법
-function changeQuote() {
-    $.ajax({
-        type: 'GET',
-        url: '/change_quote', 
-        data: ' ',              // 서버로 전달할 데이터
-        success: function(msg) {        // msg: 서버로부터 받은 데이터
-            $('#quoteMsg').html(msg);
-        }
-    });
-}
-function changeAddr() {
-    $('#addrInput').attr('class', 'mt-2');      // input box가 보이게
-}
-function addrSubmit() {
-    $('#addrInput').attr('class', 'mt-2 d-none');   // input box가 안보이게
-    let addr = $('#addrInputTag').val();
-    $.ajax({
-        type: 'GET',
-        url: '/change_addr',
-        data: {addr: addr},             // /change_addr?addr=서울시 강남구
-        success: function(msg) {
-            $('#addr').html(msg);
-        }
-    });
-}
 function changeWeather() {
-    let addr = $('#addr').text();
+    let addr = $('#profileAddr').text();
     $.ajax({
         type: 'GET',
         url: '/weather',
@@ -37,23 +12,61 @@ function changeWeather() {
     });
 }
 
-function changeProfile() {
-    $('#imageInput').attr('class', 'mt-2');
+function getProfile() {
+    $('#profileModal').modal('show');
+    $.ajax({
+        type: 'GET',
+        url: '/changeProfile',
+        data: ' ',
+        success: function(result) {
+            let profile = JSON.parse(result);
+            $('#hiddenEmail').val(profile[0]);
+            $('#modalEmail').val(profile[0]);
+            $('#hiddenImage').val(profile[1]);
+            $('#modalStateMsg').val(profile[2]);
+            $('#modalGithub').val(profile[3]);
+            $('#modalInsta').val(profile[4]);
+            $('#modalAddr').val(profile[5]);
+        } 
+    })
 }
-function imageSubmit() {
-    let imageInputVal = $('#image')[0];
+
+function changeProfile() {
+    $('#profileModal').modal('hide');
+    let email = $('#hiddenEmail').val();
+    let imageInputVal = $('#modalImage')[0];
+    let stateMsg = $('#modalStateMsg').val();
+    let github = $('#modalGithub').val();
+    let insta = $('#modalInsta').val();
+    let addr = $('#modalAddr').val();
+    let hiddenImage = $('#hiddenImage').val();
     let formData = new FormData();
+    formData.append('email', email);
     formData.append('image', imageInputVal.files[0]);
+    formData.append('stateMsg', stateMsg);
+    formData.append('github', github);
+    formData.append('insta', insta);
+    formData.append('addr', addr);
+    formData.append('hiddenImage', hiddenImage);
     $.ajax({
         type: 'POST',
-        url: '/change_profile',
+        url: '/changeProfile',
         data: formData,
         processData: false,
         contentType: false,
-        success: function(result) {
-            $('#imageInput').attr('class', 'mt-2 d-none');
-            let fname = 'http://127.0.0.1:5000/static/data/profile.png?q=' + result;
-            $('#profile').attr('src', fname);
+        success: function(result) {     
+            let profile = JSON.parse(result);
+            let filename = '/static/profile/' + profile[6] + '.png';
+            if (profile[7] != 0)    // profile image가 변화하면 mtime 값이 바뀜
+                filename += '?q=' + profile[7];
+            $('#profileImage').attr({'src': filename});
+            $('#profileStateMsg').text(profile[2]);
+            $('#profileGithub').text(profile[3]);
+            $('#profileInsta').text(profile[4]);
+            $('#profileAddr').text(profile[5]);
+            let needRefresh = profile[8];
+            if (needRefresh == 1)   // github, insta, addr이 새로이 생성되면 needRefresh가 1이 됨
+                window.location.reload();
         }
     });
 }
